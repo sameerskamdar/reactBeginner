@@ -5,10 +5,10 @@ class App extends Component {
   
   state = {
     persons: [
-      { club:'barcelona', position:'1'},
-      { club:'real madrid', position:'2'},
-      { club:'atletico madrid', position:'3'},
-      { club:'sevilla', position:'4'}
+      { id: 'adsdf', club:'barcelona', position:'1'},
+      { id: 'gbsbg', club:'real madrid', position:'2'},
+      { id: 'ujett', club:'atletico madrid', position:'3'},
+      { id: 'mry6y', club:'sevilla', position:'4'}
     ],
     showClubs: false
   }
@@ -26,15 +26,28 @@ class App extends Component {
     })
   }
 
-  clubChanged = (event) => {
+  clubChanged = (event, id) => {
+    const clubIndex = this.state.persons.findIndex( c => {
+      return c.id === id;
+    });
+
+    const club = {
+      ...this.state.persons[clubIndex]
+    };
+
+    club.club = event.target.value;
+
+    const persons = [...this.state.persons];
+    persons[clubIndex] = club;
     this.setState({
-      persons: [
-        { club:'barcelona', position:'1'},
-        { club:'RM', position:'2'},
-        { club:'atletico madrid', position:'3'},
-        { club: event.target.value, position:'5'}
-      ]
+      persons: persons
     })
+  }
+  deleteClub = (clubIndex) => {
+    //const clubs = this.state.persons.slice();
+    const clubs = [...this.state.persons]; 
+    clubs.splice(clubIndex,1);
+    this.setState({persons:clubs});
   }
 
   toggleClubs = () =>
@@ -57,10 +70,14 @@ class App extends Component {
         if(this.state.showClubs){
           persons = (
             <div>
-
             {
-              this.state.persons.map( person => {
-                return <Person club={person.club} position={person.position}/>
+              this.state.persons.map( (person, index) => {
+                return <Person click={()=>this.deleteClub(index)} 
+                                          club={person.club} 
+                                          position={person.position} 
+                                          key={person.id}
+                                          changed={(event)=>this.clubChanged(event, person.id)}
+                                          />
               })
               /* <Person club={this.state.persons[0].club} position={this.state.persons[0].position}/> 
             <Person club={this.state.persons[1].club} position={this.state.persons[1].position} click={this.switchClubName.bind(this, 'girona')}/> 
