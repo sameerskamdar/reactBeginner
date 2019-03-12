@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import Radium, {StyleRoot} from 'radium';
+//import Radium, {StyleRoot} from 'radium';
 
 class App extends Component {
   
@@ -28,7 +28,7 @@ class App extends Component {
     })
   }
 
-  clubChanged = (event, id) => {
+  clubChanged = (event, id) => { 
     const clubIndex = this.state.persons.findIndex( c => {
       return c.id === id;
     });
@@ -54,9 +54,9 @@ class App extends Component {
 
   toggleClubs = () =>
   {
-    const doesShow = this.state.showClubs;
+    //const doesShow = this.state.showClubs;
     this.setState({
-      showClubs: !doesShow
+      showClubs: ! this.state.showClubs
     });
   }
 
@@ -67,10 +67,10 @@ class App extends Component {
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      ':hover' : {
-        backgroundColor: 'orange',
-        color: 'black'
-      }
+      // ':hover' : {
+      //   backgroundColor: 'orange',
+      //   color: 'black'
+      // }
     }
     let persons = null;
 
@@ -108,16 +108,16 @@ class App extends Component {
           classes.push('bold');
         }
     return (
-      <StyleRoot>
+      //<StyleRoot>
         <div className="App">
           <h1>Hi, React</h1>
           <p className={classes.join(' ')}>its working</p>
           <button onClick={this.toggleClubs} style={style}>toggle</button>
           {persons}
         </div>
-      </StyleRoot>
+     // </StyleRoot>
     );
   }
 }
 
-export default Radium(App);
+export default App;
